@@ -2,14 +2,16 @@
 
 import { useState } from 'react'
 import { ShoppingCart, Plus, Minus } from 'lucide-react'
+import { useCart } from '@/context/CartContext'
 import type { Product } from '@/types'
 
 export default function AddToCartButton({ product }: { product: Product }) {
   const [qty, setQty] = useState(1)
   const [added, setAdded] = useState(false)
+  const { addItem } = useCart()
 
   function addToCart() {
-    // Cart logic will be wired to context in the cart phase
+    addItem(product, qty)
     setAdded(true)
     setTimeout(() => setAdded(false), 2000)
   }

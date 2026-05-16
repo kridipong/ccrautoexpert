@@ -1,8 +1,10 @@
 import type { Metadata } from 'next'
 import { Geist } from 'next/font/google'
+import Script from 'next/script'
 import './globals.css'
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
+import { CartProvider } from '@/context/CartContext'
 
 const geist = Geist({ subsets: ['latin'], variable: '--font-geist' })
 
@@ -15,9 +17,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="th" className={`${geist.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-gray-50 font-sans">
-        <Navbar />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        <CartProvider>
+          <Navbar />
+          <main className="flex-1">{children}</main>
+          <Footer />
+        </CartProvider>
+        <Script src="https://cdn.omise.co/omise.js" strategy="lazyOnload" />
       </body>
     </html>
   )

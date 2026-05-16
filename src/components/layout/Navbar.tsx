@@ -3,10 +3,12 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import { ShoppingCart, Search, Menu, X, Wrench } from 'lucide-react'
+import { useCart } from '@/context/CartContext'
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
+  const { itemCount } = useCart()
 
   function handleSearch(e: React.FormEvent) {
     e.preventDefault()
@@ -56,9 +58,11 @@ export default function Navbar() {
               className="relative p-2 text-gray-600 hover:text-red-600 transition-colors"
             >
               <ShoppingCart className="w-6 h-6" />
-              <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-600 text-white text-xs rounded-full flex items-center justify-center font-medium">
-                0
-              </span>
+              {itemCount > 0 && (
+                <span className="absolute -top-1 -right-1 min-w-[1rem] h-4 px-0.5 bg-red-600 text-white text-xs rounded-full flex items-center justify-center font-medium">
+                  {itemCount > 99 ? '99+' : itemCount}
+                </span>
+              )}
             </Link>
             <Link
               href="/account"
