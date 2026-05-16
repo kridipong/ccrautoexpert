@@ -25,27 +25,71 @@ export default async function HomePage() {
   return (
     <div>
       {/* Hero */}
-      <section className="bg-gradient-to-br from-gray-900 via-gray-800 to-red-950 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
-          <div className="max-w-2xl">
-            <p className="text-red-400 font-medium text-sm mb-3 tracking-widest uppercase">CCRAutoExpert</p>
-            <h1 className="text-4xl sm:text-5xl font-extrabold leading-tight mb-4">
-              อะไหล่รถยนต์<br />
-              <span className="text-red-400">ครบ · คุณภาพ · ส่งไว</span>
-            </h1>
-            <p className="text-gray-300 text-lg mb-8">
-              อะไหล่แท้และอะไหล่คุณภาพ ครอบคลุมทุกยี่ห้อ ทุกรุ่น<br />
-              <span className="text-gray-400 text-base">Quality parts for every make and model</span>
-            </p>
-            <div className="flex flex-wrap gap-3">
-              <Link href="/shop" className="px-6 py-3 bg-red-600 text-white font-bold rounded-lg hover:bg-red-700 transition-colors flex items-center gap-2">
-                ดูสินค้าทั้งหมด <ArrowRight className="w-4 h-4" />
-              </Link>
-              <Link href="/shop?category=chassis-brakes" className="px-6 py-3 border border-gray-500 text-white font-medium rounded-lg hover:border-red-400 hover:text-red-300 transition-colors">
-                ช่วงล่างและเบรก
-              </Link>
+      <section className="relative overflow-hidden bg-white border-b border-gray-200">
+        {/* Checkered flag background */}
+        <div
+          className="absolute inset-0 opacity-[0.045]"
+          style={{
+            backgroundImage: `repeating-conic-gradient(#000 0% 25%, transparent 0% 50%)`,
+            backgroundSize: '32px 32px',
+          }}
+        />
+        {/* Red diagonal accent */}
+        <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-red-600/10 to-transparent" />
+        <div className="absolute bottom-0 left-0 w-64 h-1.5 bg-red-600" />
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+            {/* Left — text */}
+            <div>
+              <div className="flex items-center gap-3 mb-4">
+                <div className="h-1 w-10 bg-red-600" />
+                <p className="text-red-600 font-bold text-sm tracking-widest uppercase">CCRAutoExpert</p>
+              </div>
+              <h1 className="text-5xl sm:text-6xl font-extrabold leading-none tracking-tight mb-2 text-gray-900">
+                อะไหล่<br />
+                <span className="text-red-600">รถยนต์</span>
+              </h1>
+              <p className="text-2xl sm:text-3xl font-extrabold text-gray-800 mb-6 tracking-tight">
+                ครบ · คุณภาพ · <span className="text-red-600">ส่งไว</span>
+              </p>
+              <p className="text-gray-500 text-base mb-8 leading-relaxed">
+                อะไหล่แท้และอะไหล่คุณภาพ ครอบคลุมทุกยี่ห้อ ทุกรุ่น<br />
+                <span className="text-gray-400 text-sm">Quality parts for every make and model</span>
+              </p>
+              <div className="flex flex-wrap gap-3">
+                <Link href="/shop" className="px-7 py-3.5 bg-red-600 text-white font-bold rounded-lg hover:bg-red-700 transition-colors flex items-center gap-2 shadow-lg shadow-red-200">
+                  ดูสินค้าทั้งหมด <ArrowRight className="w-4 h-4" />
+                </Link>
+                <Link href="/shop?category=chassis-brakes" className="px-7 py-3.5 border-2 border-gray-900 text-gray-900 font-bold rounded-lg hover:bg-gray-900 hover:text-white transition-colors">
+                  ช่วงล่างและเบรก
+                </Link>
+              </div>
+            </div>
+
+            {/* Right — stats */}
+            <div className="hidden lg:grid grid-cols-2 gap-4">
+              {[
+                { num: '30+', label: 'แบรนด์อะไหล่', sub: 'Part Brands' },
+                { num: '22', label: 'ยี่ห้อรถยนต์', sub: 'Car Brands' },
+                { num: '31+', label: 'รุ่นรถ', sub: 'Car Models' },
+                { num: '100%', label: 'คุณภาพรับประกัน', sub: 'Quality Guaranteed' },
+              ].map(({ num, label, sub }) => (
+                <div key={label} className="bg-white border-2 border-gray-100 rounded-2xl p-6 shadow-sm hover:border-red-200 transition-colors">
+                  <p className="text-4xl font-extrabold text-red-600 mb-1">{num}</p>
+                  <p className="font-bold text-gray-900 text-sm">{label}</p>
+                  <p className="text-gray-400 text-xs">{sub}</p>
+                </div>
+              ))}
             </div>
           </div>
+        </div>
+
+        {/* Bottom checkered strip */}
+        <div className="absolute bottom-0 right-0 flex">
+          {Array.from({ length: 12 }).map((_, i) => (
+            <div key={i} className={`w-6 h-6 ${i % 2 === 0 ? 'bg-red-600' : 'bg-gray-900'}`} />
+          ))}
         </div>
       </section>
 

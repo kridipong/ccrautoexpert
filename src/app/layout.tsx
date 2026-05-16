@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { Geist } from 'next/font/google'
 import Script from 'next/script'
 import './globals.css'
-import Navbar from '@/components/layout/Navbar'
+import NavbarServer from '@/components/layout/NavbarServer'
 import Footer from '@/components/layout/Footer'
 import { CartProvider } from '@/context/CartContext'
 
@@ -18,7 +18,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="th" className={`${geist.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-gray-50 font-sans">
         <CartProvider>
-          <Navbar />
+          <NavbarServer />
           <main className="flex-1">{children}</main>
           <Footer />
         </CartProvider>

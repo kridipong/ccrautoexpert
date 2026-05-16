@@ -4,8 +4,11 @@ import Link from 'next/link'
 import { useState } from 'react'
 import { ShoppingCart, Search, Menu, X, Wrench } from 'lucide-react'
 import { useCart } from '@/context/CartContext'
+import NavbarAuthButton from './NavbarAuthButton'
 
-export default function Navbar() {
+interface AuthUser { email: string; name: string }
+
+export default function Navbar({ authUser }: { authUser: AuthUser | null }) {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const { itemCount } = useCart()
@@ -53,10 +56,7 @@ export default function Navbar() {
 
           {/* Right actions */}
           <div className="flex items-center gap-3">
-            <Link
-              href="/cart"
-              className="relative p-2 text-gray-600 hover:text-red-600 transition-colors"
-            >
+            <Link href="/cart" className="relative p-2 text-gray-600 hover:text-red-600 transition-colors">
               <ShoppingCart className="w-6 h-6" />
               {itemCount > 0 && (
                 <span className="absolute -top-1 -right-1 min-w-[1rem] h-4 px-0.5 bg-red-600 text-white text-xs rounded-full flex items-center justify-center font-medium">
@@ -64,16 +64,8 @@ export default function Navbar() {
                 </span>
               )}
             </Link>
-            <Link
-              href="/account"
-              className="hidden sm:inline-flex items-center px-3 py-1.5 border border-gray-300 rounded-lg text-sm text-gray-700 hover:border-red-500 hover:text-red-600 transition-colors"
-            >
-              เข้าสู่ระบบ
-            </Link>
-            <button
-              className="sm:hidden p-2 text-gray-600"
-              onClick={() => setMobileOpen(!mobileOpen)}
-            >
+            <NavbarAuthButton user={authUser} />
+            <button className="sm:hidden p-2 text-gray-600" onClick={() => setMobileOpen(!mobileOpen)}>
               {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
@@ -81,21 +73,11 @@ export default function Navbar() {
 
         {/* Nav links */}
         <nav className="hidden sm:flex items-center gap-6 pb-2 text-sm font-medium text-gray-600">
-          <Link href="/shop" className="hover:text-red-600 transition-colors">
-            สินค้าทั้งหมด / All Parts
-          </Link>
-          <Link href="/shop?category=chassis-brakes" className="hover:text-red-600 transition-colors">
-            ช่วงล่าง / Chassis
-          </Link>
-          <Link href="/shop?category=engine-drivetrain" className="hover:text-red-600 transition-colors">
-            เครื่องยนต์ / Engine
-          </Link>
-          <Link href="/shop?category=engine-oil-fluids" className="hover:text-red-600 transition-colors">
-            น้ำมัน / Fluids
-          </Link>
-          <Link href="/shop?category=car-care-equipment" className="hover:text-red-600 transition-colors">
-            ดูแลรถ / Car Care
-          </Link>
+          <Link href="/shop" className="hover:text-red-600 transition-colors">สินค้าทั้งหมด / All Parts</Link>
+          <Link href="/shop?category=chassis-brakes" className="hover:text-red-600 transition-colors">ช่วงล่าง / Chassis</Link>
+          <Link href="/shop?category=engine-drivetrain" className="hover:text-red-600 transition-colors">เครื่องยนต์ / Engine</Link>
+          <Link href="/shop?category=engine-oil-fluids" className="hover:text-red-600 transition-colors">น้ำมัน / Fluids</Link>
+          <Link href="/shop?category=car-care-equipment" className="hover:text-red-600 transition-colors">ดูแลรถ / Car Care</Link>
         </nav>
       </div>
 
@@ -121,7 +103,7 @@ export default function Navbar() {
             { href: '/shop?category=chassis-brakes', label: 'ช่วงล่างและเบรก' },
             { href: '/shop?category=engine-drivetrain', label: 'เครื่องยนต์' },
             { href: '/shop?category=engine-oil-fluids', label: 'น้ำมันเครื่อง' },
-            { href: '/account', label: 'เข้าสู่ระบบ' },
+            { href: authUser ? '/account' : '/account/login', label: authUser ? 'บัญชีของฉัน' : 'เข้าสู่ระบบ' },
           ].map((link) => (
             <Link
               key={link.href}
